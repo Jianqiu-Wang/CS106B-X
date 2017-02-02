@@ -106,13 +106,16 @@ DocumentInfo statisticsFor(istream& source) {
     string vowels = "aeiouyAEIOUY";
     while (scanner.hasMoreTokens()) {
           string token = scanner.nextToken();
-
-          bool found0 = false;
-          cout << token << endl;
           int count_syllables_inword = 0;
+          // indicate whethe char before is a vowel
+          bool found0 = false;
+
+          // Loop over every token
           for (int j=0; j < token.length(); j++) {
+              // Modify all character to lower
               char i = token[j];
               i = char(tolower(i));
+              // count vowels including 'y'
               if ( i=='a' || i=='e' || i=='i' || i=='o' || i=='u' || i=='y') {
                   count_syllables_inword++;
                   if ((j!=0) & (found0)) {
@@ -120,17 +123,20 @@ DocumentInfo statisticsFor(istream& source) {
                       count_syllables_inword--;
                   }
               }
+              // Word end with e and second last is not vowels will not be counted
               if (j == token.length()-1) {
                   if ((!found0) & (token[j]=='e')) {
                       count_syllables_inword--;
                   }
               }
+
               if ( i=='a' || i=='e' || i=='i' || i=='o' || i=='u' || i=='y') {
                   found0 = true;
               } else {
                   found0 = false;
               }
            }
+
           if (isalpha(token[0])) {
               count_words++;
               count_syllables_inword = max(1,count_syllables_inword);
